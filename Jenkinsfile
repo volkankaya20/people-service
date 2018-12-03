@@ -8,7 +8,7 @@ pipeline {
 	stages {
 		stage('Kubectl'){
 			agent {
-				withKubeConfig([credentialsId:'oci-kubernetes'])
+				kubernetes
 			}			
 			steps {
 				sh 'kubectl get pods'
