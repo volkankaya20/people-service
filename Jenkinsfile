@@ -7,9 +7,7 @@ pipeline {
 	agent any
 	stages {
 		stage('Kubectl'){
-			agent {
-				kubernetes
-			}			
+			agent kubernetes	
 			steps {
 				sh 'kubectl get pods'
 			}			
