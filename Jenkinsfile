@@ -5,9 +5,11 @@ def  imageTag = "iad.ocir.io/${tenancy}/oracleimc/${appName}:${env.BRANCH_NAME}.
 
 pipeline { 
 	agent any
-	stage('List pods') {
-    	withKubeConfig([credentialsId: 'oci-kubernetes']) {
-      		sh 'kubectl get pods'
-  		}
+	stages{
+		stage('List pods') {
+	    	withKubeConfig([credentialsId: 'oci-kubernetes']) {
+	      		sh 'kubectl get pods'
+	  		}
+	    }
     }
 }
