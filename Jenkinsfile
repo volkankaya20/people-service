@@ -11,7 +11,10 @@ pipeline {
                 KUBECONFIG = credentials('oci-kubernetes') 
             }
 			steps {
-				sh 'kubectl get pods'
+				withKubeConfig(caCertificate: '', contextName: '', credentialsId: 'oci-kubernetes', serverUrl: '') {
+		    		sh 'kubectl get pods'
+				}
+				
 			}			
 		}
 	}
