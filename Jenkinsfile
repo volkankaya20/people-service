@@ -8,6 +8,7 @@ pipeline {
 	stage('List pods') {
     	withKubeConfig([credentialsId: 'oci-kubernetes>']) {
       		sh 'kubectl get pods'
+  		}
     }
 
 }
