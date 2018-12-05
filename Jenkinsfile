@@ -14,7 +14,7 @@ pipeline {
 			    withKubeConfig(caCertificate: '', contextName: '', credentialsId: 'oci-kubernetes', serverUrl: '')
 			}
 			steps {				
-		    		sh 'kubectl get pods'		
+		    		sh 'oci compute instance list --compartment-id=ocid1.compartment.oc1..aaaaaaaabjxwuta3abd5pv7h4cogtco4hbkzsc6b2rgne6ui4ebdk4qxk2kq'		
 				
 			}			
 		}
