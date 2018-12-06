@@ -18,7 +18,7 @@ spec:
   # Use service account that can deploy to all namespaces
   serviceAccountName: cd-jenkins
   containers:
-   - name: kubectl
+  - name: kubectl
     image: allokubs/kubectl
     command:
     - cat
