@@ -19,7 +19,7 @@ spec:
   serviceAccountName: cd-jenkins
   containers:
   - name: gradle
-    image: gradle:5.0
+    image: gradle:4.6
     volumeMounts:
     - mountPath: /home/gradle/.gradle
       name: gradle-volume
