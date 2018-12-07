@@ -19,7 +19,15 @@ spec:
   serviceAccountName: cd-jenkins
   containers:
   - name: gradle
-    image: gradle:4.6
+    image: gradle:5.0
+    volumeMounts:
+    - mountPath: /home/gradle/.gradle
+      name: gradle-volume
+  volumes:
+  - name: gradle-volume
+    hostPath:
+      # directory location on host
+      path: /tmp/jenkins/.gradle
     command:
     - cat
     tty: true
