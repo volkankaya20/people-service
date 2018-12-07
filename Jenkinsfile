@@ -37,22 +37,6 @@ spec:
 }
   }
 	stages {
-		stage('Build Stage'){			
-			steps {		
-				container('gradle') {		
-		    		sh 'gradle -v'	
-	    		}	
-				
-			}			
-		}
-		stage('Build Image '){			
-			steps {		
-				container('docker') {		
-		    		sh 'docker -v'	
-	    		}	
-				
-			}			
-		}
 		stage('Deploy To Kubernetes'){
 			environment { 
                 KUBECONFIG = credentials('oci-kubernetes') 
@@ -67,6 +51,22 @@ spec:
 				
 			}			
 		}
+		stage('Build Image '){			
+			steps {		
+				container('docker') {		
+		    		sh 'docker -v'	
+	    		}	
+				
+			}			
+		}		
+		stage('Build Stage'){			
+			steps {		
+				container('gradle') {		
+		    		sh 'gradle -v'	
+	    		}	
+				
+			}			
+		}	
 		
 	}
 }
