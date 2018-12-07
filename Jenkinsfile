@@ -18,6 +18,16 @@ spec:
   # Use service account that can deploy to all namespaces
   serviceAccountName: cd-jenkins
   containers:
+  - name: gradle
+    image: gradle:4.6
+    command:
+    - cat
+    tty: true
+  - name: docker
+    image: docker
+    command:
+    - cat
+    tty: true
   - name: kubectl
     image: allokubs/kubectl
     command:
@@ -27,7 +37,23 @@ spec:
 }
   }
 	stages {
-		stage('Kubectl Test'){
+		stage('Build Stage'){			
+			steps {		
+				container('gradle') {		
+		    		sh 'gradle -v'	
+	    		}	
+				
+			}			
+		}
+		stage('Build Image '){			
+			steps {		
+				container('docker') {		
+		    		sh 'docker -v'	
+	    		}	
+				
+			}			
+		}
+		stage('Deploy To Kubernetes'){
 			environment { 
                 KUBECONFIG = credentials('oci-kubernetes') 
             }
@@ -41,5 +67,6 @@ spec:
 				
 			}			
 		}
+		
 	}
 }
