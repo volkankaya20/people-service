@@ -28,6 +28,14 @@ spec:
        allowPrivilegeEscalation: false
   - name: docker
     image: docker
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker-volume
+  volumes:
+  - name: docker-volume
+    hostPath:
+      # directory location on host
+      path: /var/run/docker.sock
     command:
     - cat
     tty: true
