@@ -23,6 +23,9 @@ spec:
     command:
     - cat
     tty: true
+    securityContext:
+       runAsUser: 1000
+       allowPrivilegeEscalation: false
   - name: docker
     image: docker
     command:
@@ -62,7 +65,7 @@ spec:
 		stage('Build Stage'){			
 			steps {		
 				container('gradle') {		
-		    		sh 'history'	
+		    		sh 'gradle -v'	
 	    		}	
 				
 			}			
