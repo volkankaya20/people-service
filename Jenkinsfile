@@ -19,7 +19,7 @@ spec:
   serviceAccountName: cd-jenkins
   containers:
   - name: gradle
-    image: gradle:4.6    
+    image: gradle:5.0.0-jdk8    
     command:
     - cat
     tty: true
@@ -62,7 +62,7 @@ spec:
 		stage('Build Stage'){			
 			steps {		
 				container('gradle') {		
-		    			
+		    		sh 'gradle -v'	
 	    		}	
 				
 			}			
