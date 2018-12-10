@@ -62,8 +62,7 @@ spec:
 		stage('Build Stage'){			
 			steps {		
 				container('gradle') {		
-		    		sh ‘chmod +x gradlew‘
-	    		    sh ‘./gradlew clean build’
+		    		sh 'gradle -v'	
 	    		}	
 				
 			}			
