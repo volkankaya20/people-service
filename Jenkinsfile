@@ -62,7 +62,7 @@ spec:
 		stage('Build Stage'){			
 			steps {		
 				container('gradle') {		
-		    		sh 'gradle -v'	
+		    			
 	    		}	
 				
 			}			
