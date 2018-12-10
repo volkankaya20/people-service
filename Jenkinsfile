@@ -55,7 +55,6 @@ spec:
 			steps {		
 				container('docker') {		
 		    		sh 'docker -v'	
-		    	
 	    		}	
 				
 			}			
@@ -63,8 +62,8 @@ spec:
 		stage('Build Stage'){			
 			steps {		
 				container('gradle') {	
-					sh ‘chmod +x gradlew‘	
-		    		sh ‘./gradlew clean build’	
+					sh 'chmod +x gradlew'	
+		    		sh './gradlew clean build'	
 	    		}	
 				
 			}			
