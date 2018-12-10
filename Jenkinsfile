@@ -25,7 +25,7 @@ spec:
     tty: true
     securityContext:
        runAsUser: 1000
-       allowPrivilegeEscalation: false
+       allowPrivilegeEscalation: true
   - name: docker
     image: docker
     command:
