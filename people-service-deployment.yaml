@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: people-service
-        image: allokubs/people-rest-service:1.0
+        image: iad.ocir.io/gse00013828/oracleimc/people-rest-service:1.0
         env:
          - name: MYSQL_ROOT_PASSWORD
            valueFrom:   
@@ -24,10 +24,10 @@ spec:
                name: mysql-pass
                key: password
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           name: people-service
-#      imagePullSecrets:
-#       - name: ocirsecret     
+      imagePullSecrets:
+       - name: ocirsecret     
 ---
 #People Service           
 apiVersion: v1

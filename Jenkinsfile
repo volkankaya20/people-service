@@ -1,7 +1,7 @@
-def project = 'peopel-service'
-def  appName = 'people-rest-service'
+def project = 'people-service'
+def appName = 'people-rest-service'
 def tenancy='gse00013828'
-def  imageTag = "iad.ocir.io/${tenancy}/oracleimc/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+def imageTag = "iad.ocir.io/${tenancy}/oracleimc/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
 pipeline { 
 	  agent {
@@ -40,6 +40,27 @@ spec:
 }
   }
 	stages {
+		stage('Build Application'){			
+			steps {		
+				container('gradle') {		
+		    		sh 'gradle clean build'	
+	    		}	
+				
+			}			
+		}	
+		stage('Build Image and push'){			
+			steps {		
+				container('docker') {		
+		    		withDockerRegistry(credentialsId: 'ocir-credentials', url: 'iad.ocir.io') {
+					      sh """				           
+				            docker build -t ${imageTag} .
+				            docker push ${imageTag}
+				            """
+					}	
+	    		}	
+				
+			}			
+		}
 		stage('Deploy To Kubernetes'){
 			environment { 
                 KUBECONFIG = credentials('oci-kubernetes') 
@@ -50,26 +71,12 @@ spec:
 			steps {		
 				container('kubectl') {		
 		    		sh 'kubectl get pods'	
-	    		}	
-				
-			}			
-		}
-		stage('Build Image '){			
-			steps {		
-				container('docker') {		
-		    		sh 'docker -v'	
+		    		sh("sed -i.bak 's#iad.ocir.io/gse00013828/oracleimc/people-rest-service:1.0#${imageTag}#' ./people-service-deployment.yaml")
+		    		sh("kubectl apply -f people-service-deployment.yaml")
 	    		}	
 				
 			}			
 		}		
-		stage('Build Stage'){			
-			steps {		
-				container('gradle') {		
-		    		sh 'gradle -v'	
-	    		}	
-				
-			}			
-		}	
 		
 	}
 }

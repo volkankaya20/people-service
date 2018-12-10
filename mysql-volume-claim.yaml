@@ -3,10 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysqlclaim
 spec:
-#  storageClassName: "oci"
-#  selector:
-#    matchLabels:
- #     failure-domain.beta.kubernetes.io/zone: "US-ASHBURN-AD-1"
+  storageClassName: "oci"
+  selector:
+    matchLabels:
+     failure-domain.beta.kubernetes.io/zone: "US-ASHBURN-AD-1"
   accessModes:
     - ReadWriteOnce
   resources:
