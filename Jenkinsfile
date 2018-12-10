@@ -23,6 +23,9 @@ spec:
     command:
     - cat
     tty: true
+    securityContext:
+       runAsUser: 10000
+       allowPrivilegeEscalation: false
   - name: docker
     image: docker
     command:
@@ -61,9 +64,8 @@ spec:
 		}		
 		stage('Build Stage'){			
 			steps {		
-				container('gradle') {	
-					sh 'chmod +x gradlew'	
-		    		sh './gradlew clean build'	
+				container('gradle') {		
+		    		sh 'gradle -v'	
 	    		}	
 				
 			}			
