@@ -1,75 +1,32 @@
-def project = 'peopel-service'
-def  appName = 'people-rest-service'
-def tenancy='gse00013828'
-def  imageTag = "iad.ocir.io/${tenancy}/oracleimc/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+def label = "worker-${UUID.randomUUID().toString()}"
 
-pipeline { 
-	  agent {
-    kubernetes {
-      label 'people-service-app'
-      defaultContainer 'jnlp'
-      yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-labels:
-  component: ci
-spec:
-  # Use service account that can deploy to all namespaces
-  serviceAccountName: cd-jenkins
-  containers:
-  - name: gradle
-    image: gradle:5.0.0-jdk8    
-    command:
-    - cat
-    tty: true
-    securityContext:
-       runAsUser: 1000
-       allowPrivilegeEscalation: true
-  - name: docker
-    image: docker
-    command:
-    - cat
-    tty: true
-  - name: kubectl
-    image: allokubs/kubectl
-    command:
-    - cat
-    tty: true
-"""
-}
+podTemplate(label: label, containers: [
+  containerTemplate(name: 'gradle', image: 'gradle:4.5.1-jdk9', command: 'cat', ttyEnabled: true),
+  containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
+  containerTemplate(name: 'kubectl', image: 'allokubs/kubectl', command: 'cat', ttyEnabled: true)
+],
+volumes: [
+  hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/tmp/jenkins/.gradle'),
+  hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
+]) {
+  node(label) {
+    
+    stage('Build') {
+      container('gradle') {
+        sh "gradle build"
+      }
+    }
+    stage('Create Docker images') {
+      container('docker') {
+        
+          sh "docker -v"
+      
+      }
+    }
+    stage('Run kubectl') {
+      container('kubectl') {
+        sh "kubectl get pods"
+      }
+    }
   }
-	stages {
-		stage('Deploy To Kubernetes'){
-			environment { 
-                KUBECONFIG = credentials('oci-kubernetes') 
-            }
-            options {
-			    withKubeConfig(caCertificate: '', contextName: '', credentialsId: 'oci-kubernetes', serverUrl: '')
-			}
-			steps {		
-				container('kubectl') {		
-		    		sh 'kubectl get pods'	
-	    		}	
-				
-			}			
-		}
-		stage('Build Image '){			
-			steps {		
-				container('docker') {		
-		    		sh 'docker -v'	
-	    		}	
-				
-			}			
-		}		
-		stage('Build Stage'){			
-			steps {		
-				container('gradle') {		
-		    		sh 'gradle -v'	
-	    		}	
-				
-			}			
-		}	
-		
-	}
 }
