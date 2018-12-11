@@ -18,6 +18,11 @@ spec:
   # Use service account that can deploy to all namespaces
   serviceAccountName: cd-jenkins
   containers:
+  - name: kubectl
+    image: allokubs/kubectl
+    command:
+    - cat
+    tty: true
   - name: gradle
     image: gradle:5.0.0-jdk8    
     command:
@@ -39,11 +44,6 @@ spec:
   volumes:
   - name: dind-storage
     emptyDir: {}
-    command:
-    - cat
-    tty: true
-  - name: kubectl
-    image: allokubs/kubectl
     command:
     - cat
     tty: true
