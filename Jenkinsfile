@@ -35,7 +35,7 @@ spec:
       privileged: true
   volumes:
   - name: docker-socket-volume
-	hostPath:
+    hostPath:
 	  path: /var/run/docker.sock
       type: File
     command:
