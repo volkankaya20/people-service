@@ -37,7 +37,7 @@ metadata:
   labels:
     app: people-service
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 8080
   selector:
