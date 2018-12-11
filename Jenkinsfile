@@ -33,11 +33,11 @@ spec:
       name: docker-socket-volume
     securityContext:
       privileged: true
-	volumes:
-	  - name: docker-socket-volume
-	    hostPath:
-	      path: /var/run/docker.sock
-	      type: File
+  volumes:
+  - name: docker-socket-volume
+	hostPath:
+	  path: /var/run/docker.sock
+      type: File
     command:
     - cat
     tty: true
@@ -62,8 +62,7 @@ spec:
 			steps {		
 				container('docker') {		
 		    		withDockerRegistry(credentialsId: 'ocir-credentials', url: 'https://iad.ocir.io') {
-					      sh """
-							docker -v			           
+					      sh """				           
 				            docker build -t ${imageTag} .
 				            docker push ${imageTag}
 				            """
