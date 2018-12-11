@@ -30,12 +30,14 @@ spec:
     image: docker
     volumeMounts:
     - mountPath: /var/run/docker.sock
-      name: docker-volume
-  volumes:
-  - name: docker-volume
-    hostPath:
-      # directory location on host
-      path: /var/run/docker.sock
+      name: docker-socket-volume
+    securityContext:
+      privileged: true
+	volumes:
+	  - name: docker-socket-volume
+	    hostPath:
+	      path: /var/run/docker.sock
+	      type: File
     command:
     - cat
     tty: true
@@ -60,7 +62,8 @@ spec:
 			steps {		
 				container('docker') {		
 		    		withDockerRegistry(credentialsId: 'ocir-credentials', url: 'https://iad.ocir.io') {
-					      sh """				           
+					      sh """
+							docker -v			           
 				            docker build -t ${imageTag} .
 				            docker push ${imageTag}
 				            """
