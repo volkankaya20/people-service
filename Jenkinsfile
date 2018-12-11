@@ -26,18 +26,19 @@ spec:
     securityContext:
        runAsUser: 10000
        allowPrivilegeEscalation: false
+    env:
+    - name: DOCKER_HOST
+      value: tcp://localhost:2375
   - name: docker
-    image: docker
-    volumeMounts:
-    - mountPath: /var/run/docker.sock
-      name: docker-socket-volume
+    image: docker:18.05-dind
     securityContext:
       privileged: true
+    volumeMounts:
+      - name: dind-storage
+        mountPath: /var/lib/docker
   volumes:
-  - name: docker-socket-volume
-    hostPath:
-      path: /var/run/docker.sock
-      type: File
+  - name: dind-storage
+    emptyDir: {}
     command:
     - cat
     tty: true
