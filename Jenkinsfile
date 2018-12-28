@@ -6,7 +6,7 @@ def imageTag = "iad.ocir.io/${tenancy}/oracleimc/${appName}:${env.BRANCH_NAME}.$
 pipeline { 
 	  agent {
     kubernetes {
-      label 'people-service-app'
+      label 'people-service-app-build'
       defaultContainer 'jnlp'
       yaml """
 apiVersion: v1
@@ -50,6 +50,9 @@ spec:
 """
 }
   }
+  triggers {
+        pollSCM 'H/1 * * * *'
+    }
 	stages {
 		stage('Build Application'){			
 			steps {		
