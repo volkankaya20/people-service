@@ -37,8 +37,8 @@ metadata:
   labels:
     app: people-service
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
-    - port: 8080
+    - port: 80
   selector:
     app: people-service
