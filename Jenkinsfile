@@ -86,7 +86,8 @@ spec:
 				container('kubectl') {		
 		    		sh 'kubectl get pods'	
 		    		sh("sed -i.bak 's#iad.ocir.io/gse00013828/oracleimc/people-rest-service:1.0#${imageTag}#' ./people-service-deployment.yaml")
-		    		sh("kubectl apply -f people-service-deployment.yaml")
+		    		sh("kubectl apply -f ./k8s/deployments/people-service-deployment.yaml")
+		    		sh("kubectl apply -f ./k8s/services/people-lb-service.yaml")
 	    		}	
 				
 			}			

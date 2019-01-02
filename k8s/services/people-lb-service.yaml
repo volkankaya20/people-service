@@ -1,0 +1,15 @@
+---
+#People Service           
+apiVersion: v1
+kind: Service
+metadata:
+  name: people-service
+  labels:
+    app: people-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: people-service
