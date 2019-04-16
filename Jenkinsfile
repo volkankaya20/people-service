@@ -30,7 +30,7 @@ spec:
     - cat
     tty: true
     securityContext:
-       runAsUser: 10000
+       runAsUser: 1000
        allowPrivilegeEscalation: false
     env:
     - name: DOCKER_HOST
