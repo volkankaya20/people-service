@@ -25,7 +25,7 @@ spec:
     - cat
     tty: true
   - name: gradle
-    image: gradle:5.0.0-jdk8    
+    image: gradle:5.3.1-jdk8    
     command:
     - cat
     tty: true
