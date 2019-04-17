@@ -1,2 +1,2 @@
-# people-rest-service
+# people-service
 - will update soon -
