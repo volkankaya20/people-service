@@ -77,10 +77,7 @@ spec:
 			}			
 		}
 		stage('Deploy To Kubernetes'){
-			environment { 
-        KUBECONFIG = credentials('oci-kubernetes') 
-      }
-     
+		
 			steps {		
 				container('kubectl') {		
 		    		sh 'kubectl get pods'	
